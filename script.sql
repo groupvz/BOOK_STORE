@@ -1,0 +1,15 @@
+CREATE DATABASE ASGMT01;
+GO;
+
+USE ASGMT01;
+GO;
+
+CREATE TABLE Books (
+    id INT,
+    title VARCHAR(255),
+    author VARCHAR(255),
+    PRIMARY KEY (id)
+);
+GO;
+
+SELECT * FROM Books;

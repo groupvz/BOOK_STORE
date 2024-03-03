@@ -17,7 +17,6 @@ CREATE TABLE Books (
     Title NVARCHAR(255),
     AuthorID INT,
     Price DECIMAL(10, 2),
-    QuantityInStock INT,
     OtherDetails NVARCHAR(MAX),
     CategoryID INT,
     Introduce NVARCHAR(MAX),

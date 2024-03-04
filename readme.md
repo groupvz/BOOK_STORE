@@ -43,3 +43,11 @@
 |----------------|---------------|-----------------------------|-----------------------------|
 | AuthorID 	| INT	|PRIMARY KEY	| A unique id of Author	|
 | AuthorName	| NVARCHAR(100)		|             |Name of the Author	|
+
+## Order
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| OrderID 	| INT	|PRIMARY KEY	| a unique ID that assigned to each order	|
+| UserID	| INT		| 	FOREIGN KEY to table User('UserID')      |	|
+| OrderDate	| DATETIME		| 	NOT NULL     |	|
+|TotalAmount	|DECIMAL(11,2)|         |the amount the user must pay(USD)

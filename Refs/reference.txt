@@ -1,1 +1,0 @@
-Book store dataset : https://www.kaggle.com/datasets/sbonelondhlazi/bookstore-dataset

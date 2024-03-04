@@ -3,7 +3,7 @@
 ## Technologies used:
 	- SQL Sever Management Studio 19
     - Pandas
-    
+
 ## Data Dictionary
 ### Book
 | Field name | Data type          | Constraint                   | Description             |
@@ -37,5 +37,9 @@
 | Email    | Text    |                     | Email address of the user  |
 | Phone    | Text    |                     | Telephone number of the user |
 
-
 	
+### Author
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| AuthorID 	| INT	|PRIMARY KEY	| A unique id of Author	|
+| AuthorName	| NVARCHAR(100)		|             |Name of the Author	|

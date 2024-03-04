@@ -50,4 +50,28 @@
 | OrderID 	| INT	|PRIMARY KEY	| a unique ID that assigned to each order	|
 | UserID	| INT		| 	FOREIGN KEY to table User('UserID')      |	|
 | OrderDate	| DATETIME		| 	NOT NULL     |	|
-|TotalAmount	|DECIMAL(11,2)|         |the amount the user must pay(USD)
+
+## OrderDetail
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| OrderDetailID 	| INT	|PRIMARY KEY	| a unique ID that assigned to each order detail	|
+| OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
+| QuantityOrdered	| INT		| 	     | The quantity of product the user ordered	|
+| Subtotal	| INT		| 	     | 	|
+
+## OrderStatus
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| StatusID 	| INT	|PRIMARY KEY	| the unique id of the order status	|
+| OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
+| QuantityOrdered	| INT		| 	     | The quantity of product the user ordered	|
+| StatusDescription	| VARCHAR(50)		| 	     | 	Description of order status (Processing, Sent, Received)|
+
+## Payment
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| PaymentID 	| INT	|PRIMARY KEY	| a unique ID that assigned to a payment	|
+| OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
+| PaymentMethod	| VARCHAR(50)		|  NOT NULL	     | Buyer's payment method	|
+| PaymentStatus	| BOOLEAN		| NOT NULL	     | 	Has the order been confirmed or not?|
+

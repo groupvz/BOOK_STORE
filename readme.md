@@ -1,5 +1,10 @@
-## Data Dictionary
+# BSMS (Bookstore management system)
 
+## Technologies used:
+	- SQL Sever Management Studio 19
+    - Pandas
+    
+## Data Dictionary
 ### Book
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|

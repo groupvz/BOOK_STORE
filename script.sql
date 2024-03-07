@@ -1,106 +1,72 @@
-CREATE database BookStore
+CREATE database BOOK_STORE
 GO 
-Use BookStore
+Use BOOK_STORE
 Go
 
-CREATE TABLE BookCategories (
-    CategoryID INT PRIMARY KEY IDENTITY,
-    CategoryName NVARCHAR(255)
+
+CREATE TABLE [tblBook] (
+    [BookID] INT PRIMARY KEY,
+    [Title] TEXT NOT NULL,
+    [Author] TEXT,
+    [Price] float NOT NULL CHECK (Price > 0),
+    [Quantity] INT NOT NULL CHECK (Quantity > 0)
+   
+);
+CREATE TABLE [tblCategory] (
+    [CategoryID] INT PRIMARY KEY IDENTITY,
+    [Category] nvarchar(100) UNIQUE
+);
+CREATE TABLE [tblBookCategoryMapping] (
+	[CMappingID] INT PRIMARY KEY IDENTITY,
+	[BookID] INT ,
+	[CategoryID] INT,
+	FOREIGN KEY ([BookID]) REFERENCES [tblBook]([BookID]),
+	FOREIGN KEY ([CategoryID]) REFERENCES [tblCategory]([CategoryID])
+);
+CREATE TABLE [tblRestock] (
+	[RestockID] INT PRIMARY KEY IDENTITY,
+	[BookID] INT,
+	[Quantity] tinyint NOT NULL CHECK (Quantity > 0),
+	[Updated] DATE NOT NULL,
+	FOREIGN KEY (BookID) REFERENCES [tblBook](BookID)
 );
 
-CREATE TABLE Author (
-    AuthorID INT PRIMARY KEY IDENTITY,
-    Author_name NVARCHAR(100) NOT NULL
+CREATE TABLE [tblUser] (
+	[UserID] INT PRIMARY KEY IDENTITY, 
+	[FullName] nvarchar(50) NOT NULL,
+	[BirthYear] smallint,
+	[Country] nvarchar(50),
+	[Username] nvarchar(50) UNIQUE,
+    [Gmail] VARCHAR(255) NOT NULL UNIQUE,
+	[Password] nvarchar(50) ,
+    [Phone] VARCHAR(15) NOT NULL UNIQUE,
+	Address NVARCHAR(255) NOT NULL
+);
+CREATE TABLE [tblOrder] (
+	[OrderID] INT PRIMARY KEY IDENTITY, 
+	[OrderDate]  datetime2(7)NOT NULL, 
+	[UserID] int , 
+	FOREIGN KEY ([UserID]) REFERENCES [tblUser]([UserID])
 );
 
-CREATE TABLE Book (
-    BookID INT PRIMARY KEY,
-    Title NVARCHAR(255) NOT NULL,
-    AuthorID INT,
-    Price DECIMAL(10, 2)NOT NULL,
-    CategoryID INT,
-    Introduce NVARCHAR(MAX),
-    Publishinghouse NVARCHAR(255),
-    Publisher NVARCHAR(255),
-    Year INT,
-    Size NVARCHAR(50),
-    Weight DECIMAL(10, 2),
-    FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID),
-    FOREIGN KEY (CategoryID) REFERENCES BookCategories(CategoryID)
+CREATE TABLE [tblOrderDetail] (
+	[OrderdetailId] INT PRIMARY KEY IDENTITY,
+	[OrderID] INT,
+	[BookID] INT , 
+	[Quantity] tinyint NOT NULL CHECK (Quantity > 0),
+	FOREIGN KEY ([OrderID]) REFERENCES [tblOrder]([OrderID]),
+	FOREIGN KEY ([BookID]) REFERENCES [tblBook](BookID)
 );
-
-CREATE TABLE CustomerType (
-	ID INT PRIMARY KEY IDENTITY, 
-	Type NVARCHAR(100) NOT NULL
+CREATE TABLE [tblOrderStatus](
+	[StatusID] INT PRIMARY KEY IDENTITY,
+	[OrderID] INT ,
+	[StatusDescription] nvarchar(20),
+	FOREIGN KEY ([OrderID]) REFERENCES [tblOrder]([OrderID])
 );
-
-CREATE TABLE Customer (
-	CustomerID INT PRIMARY KEY IDENTITY, 
-	CustomerTypeID int ,
-	FullName NVARCHAR(100) NOT NULL,
-    Gender bit ,
-    Phone VARCHAR(10) UNIQUE NOT NULL,
-    Email VARCHAR(255) UNIQUE NOT NULL,
-	Address NVARCHAR(255) NOT NULL,
-	FOREIGN KEY (CustomerTypeID) REFERENCES CustomerType(ID)
-);
-
-CREATE TABLE Account (
-	CustomerID int PRIMARY KEY ,
-	Username   varchar(50)NOT NULL,
-	Password   varchar(50) NULL
-	FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
-);
-
-CREATE TABLE Admin (
-  AdminID INT PRIMARY KEY IDENTITY, 
-  FullName NVARCHAR(100) NOT NULL, 
-  Gender   bit NOT NULL, 
-  Birthday date NULL, 
-  Address  NVARCHAR(255) NULL, 
-  Email    NVARCHAR(50) NOT NULL, 
-  Phone    NVARCHAR(15) NOT NULL, 
-  Username NVARCHAR(50) NOT NULL, 
-  Password NVARCHAR(50) NULL, 
-);
-
-CREATE TABLE OrderInfo (
-	OrderID INT PRIMARY KEY IDENTITY, 
-	CustomerID int NOT NULL, 
-	AdminID int NOT NULL, 
-	OrderDate  date NOT NULL, 
-	FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
-	FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
-);
-
-CREATE TABLE OrderDetail (
-	OrderDetailID INT PRIMARY KEY IDENTITY,
-	OrderID INT NOT NULL,
-	BookID INT NOT NULL, 
-	Quantity INT NOT NULL,
-	TransactionDate date NOT NULL, 
-	Note NVARCHAR(255) NULL, 
-	FOREIGN KEY (OrderID) REFERENCES OrderInfo(OrderID),
-	FOREIGN KEY (OrderID) REFERENCES Book(BookID)
-);
-CREATE TABLE Order_Status(
-	Status_ID INT PRIMARY KEY IDENTITY,
-	Status_value NVARCHAR(15)
-);
-CREATE TABLE Orderhistory (
-	HistoryID INT PRIMARY KEY IDENTITY, 
-	OrderID INT UNIQUE NOT NULL,
-	Status_ID INT NOT NULL,
-	StatusDate date NOT NULL,
-	FOREIGN KEY (OrderID) REFERENCES OrderInfo(OrderID),
-	FOREIGN KEY (Status_ID) REFERENCES Order_Status(Status_ID)
-);
-
-
-CREATE TABLE BookInventory (
-    InventoryID INT PRIMARY KEY IDENTITY,
-    BookID INT NOT NULL,
-    Quantity INT NOT NULL,
-    UpDated datetime,
-    FOREIGN KEY (BookID) REFERENCES Book(BookID)
+CREATE TABLE [tblPayment] (
+	[PaymentID] INT PRIMARY KEY,
+	[OrderID] INT,
+	[PaymentMethod] nvarchar(20) ,
+	[PaymentStatus] nvarchar(20) ,
+	FOREIGN KEY ([OrderID]) REFERENCES [tblOrder]([OrderID])
 );

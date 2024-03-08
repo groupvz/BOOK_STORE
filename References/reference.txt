@@ -2,3 +2,4 @@ Books dataset : https://www.kaggle.com/datasets/elvinrustam/books-dataset/data
 
 User dataset: https://www.kaggle.com/datasets/cashncarry/fifa-22-complete-player-dataset
 
+USA adresss : https://www.kaggle.com/datasets/ahmedshahriarsakib/list-of-real-usa-addresses

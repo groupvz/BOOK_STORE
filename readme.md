@@ -83,74 +83,83 @@
 - Issues tracking: GitHub
 
 
-# Data Dictionary
-## Book
+# 4. Data design
+## 4.1. Entity-relationship Model
+![ER Model](References/ER_Model.png)
+
+## 4.2. Diagram
+![ER Diagram](References/BOOK_STORE_DIAGRAM.png)
+
+## 4.3. Data Dictionary
+### tblBook
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
 | BookID| INT  | PRIMARY KEY                | ID number of a book in the store      |
 | Title     | TEXT | NOT NULL                   | Title of a book |
-| AuthorID| INT  | FOREIGN KEY to table AUTHOR('AuthorID')              | ID number of the author of the book      |
-| Price     | DECIMAL(8,2) |                   | pre-tax cost of a book(USD) |
-| QuantityInStock     | INT(5) |        > 0           | Inventory number  |
+| Author| TEXT  |     NOT NULL         | Show full name of the author|
+| Price     | FLOAT |             NOT NULL      | pre-tax cost of a book(USD) |
+| Quantity     | INT |        >=0           | Number of books remaining |
 
-## BookCategoryMapping
+### tblBookCategoryMapping
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
-| ID| INT(7)  | PRIMARY KEY                | the unique id of the book's category (sometimes a book has more than one category)     |
+| CMappingID| INT  | PRIMARY KEY                | the unique id of the book's category (sometimes a book has more than one category)     |
 | BookID| INT  | FOREIGN KEY to table Book('BookID')              |      |
-| CategoryID| TINYINT  | FOREIGN KEY to table Category('CategoryID')      
+| CategoryID| INT  | FOREIGN KEY to table Category('CategoryID')      
 
-## Category
+### tblCategory
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
-| CategoryID 	| TINYINT	|PRIMARY KEY	| A unique id of category	|
-| CategoryName	| TEXT		|             |Name of a category	|
+| CategoryID 	| INT	|PRIMARY KEY	| A unique id of category	|
+| Category	| NVARCHAR(100)		|             |Name of a category	|
 
-## User
+### tblUser
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
 | UserID   | INT | PRIMARY KEY                 | ID number of a client      |
-| Username | Text    | NOT NULL                    | Username of the user       |
-| Password | Text    | NOT NULL                    | Password of the user (encrypted) |
-| Full name | Text   | NOT NULL                    | Full name of the user      |
-| Email    | Text    |                     | Email address of the user  |
-| Phone    | Text    |                     | Telephone number of the user |
+| BirthYear   | SMALLINT | >=1900           | User's year of birth    |
+| Username | NVARCHAR(50)    | NOT NULL                    | Username of the user       |
+| Password | NVARCHAR(50)   | NOT NULL                    | Password of the user (encrypted) |
+| Full name | NVARCHAR(50)   | NOT NULL                    | Full name of the user      |
+| Email    | NVARCHAR(100)   |             NOT NULL        | Email address of the user  |
+| Phone    | NVARCHAR(15)   |             NOT NULL        | Telephone number of the user |
 
-	
-## Author
-| Field name | Data type          | Constraint                   | Description             |
-|----------------|---------------|-----------------------------|-----------------------------|
-| AuthorID 	| INT	|PRIMARY KEY	| A unique id of Author	|
-| AuthorName	| NVARCHAR(100)		|             |Name of the Author	|
 
-## Order
+
+### tblOrder
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
 | OrderID 	| INT	|PRIMARY KEY	| a unique ID that assigned to each order	|
 | UserID	| INT		| 	FOREIGN KEY to table User('UserID')      |	|
-| OrderDate	| DATETIME		| 	NOT NULL     |	|
+| OrderDate	| DATE	| 	NOT NULL     |The date the user placed the order 	|
 
-## OrderDetail
+### tblOrderDetail
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
-| OrderDetailID 	| INT	|PRIMARY KEY	| a unique ID that is assigned to each order detail	|
+| OrderDetailID 	| INT	|PRIMARY KEY	| A unique ID that is assigned to each order detail	|
 | OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
-| QuantityOrdered	| INT		| 	     | The quantity of product the user ordered	|
-| Subtotal	| INT		| 	     | 	|
+| BookID	| INT		| 	FOREIGN KEY to table Book('BookID')      |	|
+| Quantity	| INT		| 	  >=0   | How many book the user ordered	|
 
-## OrderStatus
+### tblOrderStatus
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
 | StatusID 	| INT	|PRIMARY KEY	| the unique id of the order status	|
 | OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
-| QuantityOrdered	| INT		| 	     | The quantity of product the user ordered	|
-| StatusDescription	| VARCHAR(50)		| 	     | 	Description of order status (Processing, Sent, Received)|
+| StatusDescription	| NVARCHAR(20)		| 	    NOT NULL | 	Description of order status (Processing, Sent, Received)|
 
-## Payment
+### tblPayment
 | Field name | Data type          | Constraint                   | Description             |
 |----------------|---------------|-----------------------------|-----------------------------|
 | PaymentID 	| INT	|PRIMARY KEY	| a unique ID that assigned to a payment	|
 | OrderID	| INT		| 	FOREIGN KEY to table Order('OrderID')      |	|
-| PaymentMethod	| VARCHAR(50)		|  NOT NULL	     | Buyer's payment method	|
-| PaymentStatus	| BOOLEAN		| NOT NULL	     | 	Has the order been confirmed or not?|
+| PaymentMethod	| NVARCHAR(20)		|  NOT NULL	     | Buyer's payment method	|
+| PaymentStatus	| NVARCHAR(20)		| NOT NULL	     | 	Has the order been confirmed or not?|
 
+### tblRestock
+| Field name | Data type          | Constraint                   | Description             |
+|----------------|---------------|-----------------------------|-----------------------------|
+| RestockID 	| INT	|PRIMARY KEY	| code of the time the goods are imported into the warehouse	|
+| BookID	| INT		| 	FOREIGN KEY to table Book('BookID')      |	|
+| Quantity	| INT		| 	 >=0    | Number of books restocked	|
+| Updated	| DATE		| 	 NOT NULL    | The date the book was restocked	|

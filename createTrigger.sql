@@ -1,4 +1,3 @@
-
 -- Create trigger update book quantity
 CREATE TRIGGER trgUpdateBookQuantity
 ON tblRestock
@@ -6,11 +5,13 @@ AFTER INSERT
 AS
 BEGIN
     UPDATE b
-    SET b.Quantity = b.Quantity + i.Quantity
+    SET b.Quantity = b.Quantity + r.Quantity
     FROM tblBook b
-    INNER JOIN inserted i ON b.BookID = i.BookID;
+    INNER JOIN tblRestock r ON b.BookID = r.BookID;
 END;
 
+select * from tblBook b
+inner join tblRestock r on b.BookID = r.BookID
 
 -- Create trigger update book quantity through order status
 CREATE TRIGGER trgUpdateBookQuantityOrder
@@ -44,6 +45,5 @@ BEGIN
     SET StatusDescription = 'Processing'
     WHERE OrderID = (SELECT i.OrderID FROM inserted i WHERE i.PaymentStatus = 'Completed');
 END;
-
 
 

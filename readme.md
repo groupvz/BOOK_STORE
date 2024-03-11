@@ -123,8 +123,8 @@
 | Full name | NVARCHAR(50)   | NOT NULL                    | Full name of the user      |
 | Email    | NVARCHAR(100)   |             NOT NULL        | Email address of the user  |
 | Phone    | NVARCHAR(15)   |             NOT NULL        | Telephone number of the user |
-| Adress   | NVARCHAR(255)  |		  NOT NULL	  | User's residential address	 |
-| Contry   | NVARCHAR(50)   | 		  NOT NULL        | Countries of users		 |
+| Address   | NVARCHAR(255)  |		  NOT NULL	  | User's residential address	 |
+| Country   | NVARCHAR(50)   | 		  NOT NULL        | Countries of users		 |
 
 
 

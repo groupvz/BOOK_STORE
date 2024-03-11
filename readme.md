@@ -20,7 +20,7 @@
 # 1. Problem Statement:
 - In the modern age of technology, the Internet has played a significant role in people's lives. It has greatly improved the quality of life and standards of living for many individuals. The Internet has expanded into various fields and levels. E-commerce is one of the sectors that has emerged in recent years. Online bookstores have helped many book lovers by making it easy for them to purchase books online. Sometimes it is not convenient to visit a traditional bookstore, as it is limited by operating hours, the availability of a specific book, its location, and most importantly, the necessary space to store many books. Such limitations have led to the development of e-commerce industries related to bookstores. Our project is to create a database for a simple e-commerce website, containing various types of books so that consumers can shop online.
 
-# 2. System Business Description:
+# 2.Describing the system's features:
 ## 2.1. Book Management:
 - Add books:
 	+ Administrators have the right to add information about new books to the system.

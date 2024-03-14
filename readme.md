@@ -164,4 +164,4 @@
 | RestockID 	| INT	|PRIMARY KEY	| code of the time the goods are imported into the warehouse	|
 | BookID	| INT		| 	FOREIGN KEY to table Book('BookID')      |	|
 | Quantity	| INT		| 	 >=0    | Number of books restocked	|
-| Updated	| DATE		| 	 NOT NULL    | The date the book was restocked	|
+| UpdatedDate	| DATE		| 	 NOT NULL    | The date the book was restocked	|
